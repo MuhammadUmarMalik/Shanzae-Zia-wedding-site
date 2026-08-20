@@ -4,63 +4,30 @@
  * Violet Aperture design reminder: this page uses black, white, and violet contrast,
  * Bodoni Moda display moments, Manrope interface rhythm, bold image frames, and measured motion.
  */
-import { useEffect, useRef, useState, type TouchEvent } from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, useReducedMotion } from "framer-motion";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import {
   ArrowDown,
   ArrowUpRight,
-  CalendarDays,
   Check,
-  ChevronLeft,
-  ChevronRight,
   CirclePlay,
-  Clock3,
   Instagram,
-  Loader2,
   MapPin,
   Menu,
   MessageCircle,
   Quote,
-  Send,
   X,
 } from "lucide-react";
-import { toast } from "sonner";
 import { CustomCursor } from "@/components/CustomCursor";
 import { GrainOverlay } from "@/components/GrainOverlay";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Form } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Sheet,
   SheetClose,
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Accordion,
   AccordionContent,
@@ -74,8 +41,32 @@ import { cn } from "@/lib/utils";
 
 const EASE = [0.25, 0.46, 0.45, 0.94] as const;
 
-const Calendar = dynamic(
-  () => import("@/components/ui/calendar").then(module => module.Calendar),
+const BookingForm = dynamic(
+  () => import("@/components/booking-form").then(module => module.BookingForm),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        className="grid grid-cols-1 gap-6 md:grid-cols-2"
+        aria-hidden="true"
+      >
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div
+            key={i}
+            className={cn(
+              "h-12 rounded-sm border border-border bg-muted/40",
+              i === 5 && "min-h-36 md:col-span-2"
+            )}
+          />
+        ))}
+        <div className="h-14 rounded-sm border border-border bg-muted/40 md:col-span-2" />
+      </div>
+    ),
+  }
+);
+
+const Lightbox = dynamic(
+  () => import("@/components/lightbox").then(module => module.Lightbox),
   { ssr: false }
 );
 
@@ -472,43 +463,6 @@ const faqs = [
   },
 ] as const;
 
-const bookingSchema = z.object({
-  name: z.string().min(2, "Please enter your name."),
-  email: z.string().email("Please enter a valid email address."),
-  phone: z.string().min(7, "Please enter a valid phone number."),
-  location: z.string().min(2, "Please share the shoot location."),
-  date: z.date(),
-  time: z.enum(["morning", "afternoon", "evening"]),
-  message: z.string().min(12, "Tell me a little more about the occasion."),
-});
-
-type BookingValues = z.infer<typeof bookingSchema>;
-
-function BookingField({
-  label,
-  id,
-  error,
-  children,
-}: {
-  label: string;
-  id: string;
-  error?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="space-y-2">
-      <Label
-        htmlFor={id}
-        className="font-ui text-[0.6875rem] font-normal tracking-[0.1em] text-foreground/80 uppercase"
-      >
-        {label}
-      </Label>
-      {children}
-      {error ? <p className="text-sm text-red-300">{error}</p> : null}
-    </div>
-  );
-}
-
 function PortfolioTile({
   item,
   onOpen,
@@ -565,22 +519,10 @@ export default function Home() {
     (typeof portfolioItems)[number] | null
   >(null);
   const [lightboxDirection, setLightboxDirection] = useState<1 | -1>(1);
-  const lightboxTouchStart = useRef<{ x: number; y: number } | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeFaqGroup, setActiveFaqGroup] =
     useState<(typeof faqGroups)[number]>("General");
   const reduceMotion = useReducedMotion();
-  const form = useForm<BookingValues>({
-    resolver: zodResolver(bookingSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      location: "",
-      time: "morning",
-      message: "",
-    },
-  });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
@@ -617,22 +559,6 @@ export default function Home() {
     return () => observer.disconnect();
   }, [reduceMotion]);
 
-  const submitBooking = async (_values: BookingValues) => {
-    await new Promise(resolve => window.setTimeout(resolve, 700));
-    toast.success("Your details are ready to send.", {
-      description:
-        "Connect this static form to your preferred inbox before accepting live enquiries.",
-    });
-    form.reset({
-      name: "",
-      email: "",
-      phone: "",
-      location: "",
-      time: "morning",
-      message: "",
-    });
-  };
-
   const navItems = [
     ["Home", "#top"],
     ["About", "#about"],
@@ -656,42 +582,6 @@ export default function Home() {
     setActiveImage(portfolioItems[nextIndex]);
   };
 
-  const handleLightboxTouchStart = (event: TouchEvent<HTMLDivElement>) => {
-    const touch = event.touches[0];
-    lightboxTouchStart.current = touch
-      ? { x: touch.clientX, y: touch.clientY }
-      : null;
-  };
-
-  const handleLightboxTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
-    const start = lightboxTouchStart.current;
-    const touch = event.changedTouches[0];
-    lightboxTouchStart.current = null;
-    if (!start || !touch) return;
-
-    const deltaX = touch.clientX - start.x;
-    const deltaY = touch.clientY - start.y;
-    if (Math.abs(deltaX) < 56 || Math.abs(deltaX) < Math.abs(deltaY) * 1.2)
-      return;
-    moveLightbox(deltaX < 0 ? 1 : -1);
-  };
-
-  useEffect(() => {
-    if (!activeImage) return;
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "ArrowLeft") {
-        event.preventDefault();
-        moveLightbox(-1);
-      }
-      if (event.key === "ArrowRight") {
-        event.preventDefault();
-        moveLightbox(1);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [activeImage, activeImageIndex]);
-
   return (
     <div className="min-h-screen overflow-x-clip bg-background text-foreground">
       <CustomCursor />
@@ -711,11 +601,23 @@ export default function Home() {
             className="flex items-center gap-3 focus-visible:ring-2 focus-visible:ring-foreground/50"
             aria-label="Shanzae Zia home"
           >
-            <img
-              src="/images/shanzae/brand/still-frame-mark.png"
-              alt=""
-              className="h-10 w-10 rounded-sm bg-primary p-1.5 object-contain"
-            />
+            <picture className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm bg-primary p-1.5">
+              <source
+                type="image/avif"
+                srcSet="/images/shanzae/brand/still-frame-mark.avif"
+              />
+              <source
+                type="image/webp"
+                srcSet="/images/shanzae/brand/still-frame-mark.webp"
+              />
+              <img
+                src="/images/shanzae/brand/still-frame-mark-64.png"
+                alt=""
+                width={128}
+                height={128}
+                className="h-full w-full object-contain"
+              />
+            </picture>
             <span className="font-ui text-[0.8125rem] font-medium tracking-[0.12em] text-foreground uppercase">
               Shanzae Zia
             </span>
@@ -876,13 +778,9 @@ export default function Home() {
               </p>
             </motion.div>
             <motion.figure
-              initial={
-                reduceMotion ? false : { opacity: 0, y: 28, scale: 0.985 }
-              }
-              animate={
-                reduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }
-              }
-              transition={{ duration: 0.85, delay: 0.56, ease: EASE }}
+              initial={reduceMotion ? false : { y: 28, scale: 0.985 }}
+              animate={reduceMotion ? undefined : { y: 0, scale: 1 }}
+              transition={{ duration: 0.85, delay: 0.4, ease: EASE }}
               className="image-frame group relative mt-8 overflow-hidden border border-foreground/15 bg-card shadow-[0_30px_72px_-42px_oklch(0.18_0.06_301/0.55)] sm:mt-10"
             >
               <div className="aspect-[1.6/1] min-h-80 overflow-hidden">
@@ -1643,185 +1541,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(submitBooking)}
-                className="grid grid-cols-1 gap-6 md:grid-cols-2"
-                noValidate
-              >
-                <BookingField
-                  label="Name"
-                  id="name"
-                  error={form.formState.errors.name?.message}
-                >
-                  <Input
-                    id="name"
-                    {...form.register("name")}
-                    placeholder="Your name"
-                    aria-invalid={Boolean(form.formState.errors.name)}
-                    className="h-12 rounded-sm border-border bg-transparent font-ui text-sm placeholder:text-muted-foreground/70"
-                  />
-                </BookingField>
-                <BookingField
-                  label="Email"
-                  id="email"
-                  error={form.formState.errors.email?.message}
-                >
-                  <Input
-                    id="email"
-                    type="email"
-                    {...form.register("email")}
-                    placeholder="name@example.com"
-                    aria-invalid={Boolean(form.formState.errors.email)}
-                    className="h-12 rounded-sm border-border bg-transparent font-ui text-sm placeholder:text-muted-foreground/70"
-                  />
-                </BookingField>
-                <BookingField
-                  label="Phone"
-                  id="phone"
-                  error={form.formState.errors.phone?.message}
-                >
-                  <Input
-                    id="phone"
-                    {...form.register("phone")}
-                    placeholder="Your phone number"
-                    aria-invalid={Boolean(form.formState.errors.phone)}
-                    className="h-12 rounded-sm border-border bg-transparent font-ui text-sm placeholder:text-muted-foreground/70"
-                  />
-                </BookingField>
-                <BookingField
-                  label="Location"
-                  id="location"
-                  error={form.formState.errors.location?.message}
-                >
-                  <Input
-                    id="location"
-                    {...form.register("location")}
-                    placeholder="City or venue"
-                    aria-invalid={Boolean(form.formState.errors.location)}
-                    className="h-12 rounded-sm border-border bg-transparent font-ui text-sm placeholder:text-muted-foreground/70"
-                  />
-                </BookingField>
-                <BookingField
-                  label="Preferred date"
-                  id="date"
-                  error={form.formState.errors.date?.message}
-                >
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        id="date"
-                        type="button"
-                        variant="outline"
-                        className="flex h-12 w-full justify-start rounded-sm border-border bg-transparent px-3 font-ui text-sm font-normal text-foreground hover:bg-foreground/5"
-                      >
-                        <CalendarDays
-                          size={16}
-                          className="mr-2 text-muted-foreground"
-                        />
-                        {form.watch("date") ? (
-                          form.watch("date")?.toLocaleDateString("en-GB", {
-                            day: "2-digit",
-                            month: "short",
-                            year: "numeric",
-                          })
-                        ) : (
-                          <span className="text-muted-foreground">
-                            Choose a date
-                          </span>
-                        )}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent
-                      align="start"
-                      className="w-auto rounded-sm border-border bg-popover p-0 text-popover-foreground"
-                    >
-                      <Calendar
-                        mode="single"
-                        selected={form.watch("date")}
-                        onSelect={date => {
-                          if (date)
-                            form.setValue("date", date, {
-                              shouldValidate: true,
-                            });
-                        }}
-                        disabled={date =>
-                          date < new Date(new Date().setHours(0, 0, 0, 0))
-                        }
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </BookingField>
-                <BookingField
-                  label="Preferred time"
-                  id="time"
-                  error={form.formState.errors.time?.message}
-                >
-                  <Select
-                    value={form.watch("time")}
-                    onValueChange={value =>
-                      form.setValue("time", value as BookingValues["time"], {
-                        shouldValidate: true,
-                      })
-                    }
-                  >
-                    <SelectTrigger
-                      id="time"
-                      className="h-12 rounded-sm border-border bg-transparent font-ui text-sm"
-                    >
-                      <Clock3
-                        size={16}
-                        className="mr-2 text-muted-foreground"
-                      />
-                      <SelectValue placeholder="Choose a time" />
-                    </SelectTrigger>
-                    <SelectContent className="rounded-sm border-border bg-popover text-popover-foreground">
-                      <SelectItem value="morning">Morning</SelectItem>
-                      <SelectItem value="afternoon">Afternoon</SelectItem>
-                      <SelectItem value="evening">Evening</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </BookingField>
-                <div className="md:col-span-2">
-                  <BookingField
-                    label="Message"
-                    id="message"
-                    error={form.formState.errors.message?.message}
-                  >
-                    <Textarea
-                      id="message"
-                      {...form.register("message")}
-                      placeholder="Tell me about your event or photography requirements."
-                      aria-invalid={Boolean(form.formState.errors.message)}
-                      className="min-h-36 resize-y rounded-sm border-border bg-transparent font-ui text-sm leading-7 placeholder:text-muted-foreground/70"
-                    />
-                  </BookingField>
-                </div>
-                <div className="md:col-span-2">
-                  <Button
-                    type="submit"
-                    disabled={form.formState.isSubmitting}
-                    className="primary-button h-auto w-full py-4 disabled:opacity-60"
-                  >
-                    {form.formState.isSubmitting ? (
-                      <>
-                        <Loader2 size={16} className="animate-spin" /> Preparing
-                        your note…
-                      </>
-                    ) : (
-                      <>
-                        <Send size={15} /> Book a call
-                      </>
-                    )}
-                  </Button>
-                  <p className="mt-4 text-center text-xs font-light leading-5 text-muted-foreground">
-                    This static preview validates your enquiry locally. Connect
-                    it to an inbox before accepting live submissions.
-                  </p>
-                </div>
-              </form>
-            </Form>
+            <BookingForm />
           </div>
         </section>
 
@@ -1928,11 +1648,23 @@ export default function Home() {
           <div className="grid grid-cols-1 gap-10 md:grid-cols-[1.7fr_0.8fr_0.9fr_0.85fr] md:gap-8">
             <div>
               <a href="#top" className="inline-flex items-center gap-3">
+                <picture className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm bg-primary p-1.5">
+                  <source
+                    type="image/avif"
+                    srcSet="/images/shanzae/brand/still-frame-mark.avif"
+                  />
+                  <source
+                    type="image/webp"
+                    srcSet="/images/shanzae/brand/still-frame-mark.webp"
+                  />
                 <img
-                  src="/images/shanzae/brand/still-frame-mark.png"
+                  src="/images/shanzae/brand/still-frame-mark-64.png"
                   alt=""
-                  className="h-9 w-9 rounded-sm bg-primary p-1.5 object-contain"
+                  width={128}
+                  height={128}
+                  className="h-full w-full object-contain"
                 />
+              </picture>
                 <span className="font-ui text-sm font-medium tracking-[0.12em] uppercase">
                   Shanzae Zia
                 </span>
@@ -2052,102 +1784,14 @@ export default function Home() {
         </div>
       </footer>
 
-      <Dialog
-        open={Boolean(activeImage)}
-        onOpenChange={open => !open && setActiveImage(null)}
-      >
-        <DialogContent className="flex h-[100dvh] max-w-none flex-col justify-center rounded-none border-0 bg-background p-6 text-foreground sm:max-w-none md:p-12 [&>button]:right-6 [&>button]:top-6 [&>button]:rounded-none [&>button]:border [&>button]:border-foreground/35 [&>button]:p-2 [&>button]:text-foreground">
-          <DialogTitle className="sr-only">
-            {activeImage?.title ?? "Portfolio image"}
-          </DialogTitle>
-          <DialogDescription className="sr-only">
-            Expanded photograph from Shanzae Zia&apos;s selected portfolio.
-            Swipe left or right on touch devices, or use the left and right
-            arrow keys, to change images.
-          </DialogDescription>
-          {activeImage ? (
-            <>
-              <div
-                className="image-frame relative mx-auto flex max-h-[76dvh] w-full max-w-6xl touch-pan-y items-center justify-center overflow-hidden bg-card"
-                onTouchStart={handleLightboxTouchStart}
-                onTouchEnd={handleLightboxTouchEnd}
-              >
-                <motion.div
-                  key={activeImage.src}
-                  initial={
-                    reduceMotion
-                      ? false
-                      : { opacity: 0, x: lightboxDirection * 28 }
-                  }
-                  animate={reduceMotion ? undefined : { opacity: 1, x: 0 }}
-                  transition={{ duration: 0.28, ease: EASE }}
-                  className="flex max-h-[76dvh] w-full items-center justify-center"
-                >
-                  <EditorialImage
-                    key={activeImage.src}
-                    src={activeImage.src}
-                    alt={`Shanzae Zia photography — ${activeImage.title}`}
-                    sizes="(min-width: 1280px) 1152px, (min-width: 768px) 90vw, 100vw"
-                    className="max-h-[76dvh] w-auto max-w-full object-contain"
-                  />
-                </motion.div>
-                <button
-                  type="button"
-                  onClick={() => moveLightbox(-1)}
-                  className="absolute left-3 top-1/2 z-30 hidden h-11 w-11 -translate-y-1/2 items-center justify-center border border-foreground/35 bg-background/85 text-foreground backdrop-blur-sm transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:ring-2 focus-visible:ring-primary sm:inline-flex"
-                  aria-label="Previous portfolio image"
-                >
-                  <ChevronLeft size={21} />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => moveLightbox(1)}
-                  className="absolute right-3 top-1/2 z-30 hidden h-11 w-11 -translate-y-1/2 items-center justify-center border border-foreground/35 bg-background/85 text-foreground backdrop-blur-sm transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:ring-2 focus-visible:ring-primary sm:inline-flex"
-                  aria-label="Next portfolio image"
-                >
-                  <ChevronRight size={21} />
-                </button>
-              </div>
-              <div className="mx-auto flex w-full max-w-6xl flex-col justify-between gap-4 pt-5 sm:flex-row sm:items-center">
-                <div>
-                  <p className="section-label">{activeImage.category}</p>
-                  <p className="mt-2 font-display text-xl italic">
-                    {activeImage.title}
-                  </p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => moveLightbox(-1)}
-                    className="inline-flex h-10 w-10 items-center justify-center border border-border text-foreground transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:ring-2 focus-visible:ring-primary"
-                    aria-label="Previous portfolio image"
-                  >
-                    <ChevronLeft size={19} />
-                  </button>
-                  <p
-                    aria-live="polite"
-                    className="min-w-14 text-center font-ui text-[0.625rem] font-semibold tracking-[0.14em] text-muted-foreground uppercase"
-                  >
-                    {String(activeImageIndex + 1).padStart(2, "0")} /{" "}
-                    {String(portfolioItems.length).padStart(2, "0")}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => moveLightbox(1)}
-                    className="inline-flex h-10 w-10 items-center justify-center border border-border text-foreground transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:ring-2 focus-visible:ring-primary"
-                    aria-label="Next portfolio image"
-                  >
-                    <ChevronRight size={19} />
-                  </button>
-                </div>
-                <p className="text-xs font-light tracking-[0.12em] text-muted-foreground uppercase">
-                  Swipe or use arrow keys
-                </p>
-              </div>
-            </>
-          ) : null}
-        </DialogContent>
-      </Dialog>
+      <Lightbox
+        item={activeImage}
+        onClose={() => setActiveImage(null)}
+        onNavigate={moveLightbox}
+        direction={lightboxDirection}
+        index={activeImageIndex}
+        total={portfolioItems.length}
+      />
     </div>
   );
 }

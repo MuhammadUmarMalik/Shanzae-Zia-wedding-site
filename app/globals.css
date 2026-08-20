@@ -167,6 +167,7 @@
     border-radius: inherit;
     animation: editorial-image-sheen 1.25s ease-in-out infinite;
     transition: opacity 300ms cubic-bezier(0.23, 1, 0.32, 1), visibility 300ms step-end;
+    will-change: opacity;
   }
 
   .image-loading-wash--hidden {
@@ -207,8 +208,8 @@
   }
 
   @keyframes editorial-image-sheen {
-    from { background-position: 115% 0; }
-    to { background-position: -115% 0; }
+    from { opacity: 0.35; }
+    to { opacity: 0.85; }
   }
 
   main > section:not([data-static-motion]) {
@@ -251,5 +252,9 @@
 @media (pointer: coarse) {
   .grain-overlay {
     display: none;
+  }
+
+  .image-loading-wash {
+    animation: none;
   }
 }
