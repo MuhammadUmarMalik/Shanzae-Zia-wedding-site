@@ -1629,7 +1629,7 @@ export default function Home() {
                   Chat on WhatsApp with +92 309 5921582
                 </a>
                 <a
-                  href="https://www.instagram.com/shanzaeziaphotography/"
+                  href="https://www.instagram.com/shanzae.zia"
                   target="_blank"
                   rel="noreferrer"
                   className="contact-link"
@@ -1943,7 +1943,7 @@ export default function Home() {
               </p>
               <div className="mt-6 flex items-center gap-4">
                 <a
-                  href="https://www.instagram.com/shanzaeziaphotography/"
+                  href="https://www.instagram.com/shanzae.zia"
                   target="_blank"
                   rel="noreferrer"
                   aria-label="Shanzae Zia on Instagram"
@@ -2011,7 +2011,7 @@ export default function Home() {
                   WhatsApp
                 </a>
                 <a
-                  href="https://www.instagram.com/shanzaeziaphotography/"
+                  href="https://www.instagram.com/shanzae.zia"
                   target="_blank"
                   rel="noreferrer"
                   className="text-sm font-light text-muted-foreground transition-colors hover:text-primary"

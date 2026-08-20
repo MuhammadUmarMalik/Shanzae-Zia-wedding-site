@@ -25,7 +25,7 @@ const structuredData = {
       "@type": "Person",
       name: "Shanzae Zia",
       jobTitle: "Wedding Photographer and Visual Storyteller",
-      sameAs: ["https://www.instagram.com/shanzaeziaphotography/"],
+      sameAs: ["https://www.instagram.com/shanzae.zia"],
     },
     {
       "@type": "ProfessionalService",
@@ -33,7 +33,7 @@ const structuredData = {
       description: "Professional wedding photography, cinematic videography and visual storytelling.",
       areaServed: { "@type": "City", name: "Islamabad" },
       telephone: "+923095921582",
-      sameAs: ["https://www.instagram.com/shanzaeziaphotography/"],
+      sameAs: ["https://www.instagram.com/shanzae.zia"],
     },
   ],
 };
