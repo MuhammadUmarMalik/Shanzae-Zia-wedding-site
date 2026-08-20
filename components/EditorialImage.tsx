@@ -1,6 +1,6 @@
 "use client";
 
-/* Violet Aperture design system: images arrive as calm, editorial frames with a restrained violet loading wash and tactile photographic feedback. */
+/* Black + Beige design system: images arrive as calm, editorial frames with a restrained warm-beige loading wash and tactile photographic feedback. */
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { responsiveImageSources } from "@/components/responsive-image-sources";

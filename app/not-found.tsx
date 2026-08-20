@@ -1,4 +1,4 @@
-/* Violet Aperture design system: an austere editorial recovery view, using a decisive violet action and photographic black-white contrast. */
+/* Black + Beige design system: an austere editorial recovery view using a warm beige action and cinematic black-cream contrast. */
 import Link from "next/link";
 
 export default function NotFound() {

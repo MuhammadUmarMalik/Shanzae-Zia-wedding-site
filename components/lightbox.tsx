@@ -114,7 +114,7 @@ export function Lightbox({
               <button
                 type="button"
                 onClick={() => onNavigate(-1)}
-                className="absolute left-3 top-1/2 z-30 hidden h-11 w-11 -translate-y-1/2 items-center justify-center border border-foreground/35 bg-background/85 text-foreground backdrop-blur-sm transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:ring-2 focus-visible:ring-primary sm:inline-flex"
+                className="absolute left-3 top-1/2 z-30 hidden h-11 w-11 -translate-y-1/2 items-center justify-center border border-foreground/35 bg-background/85 text-foreground backdrop-blur-sm transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:ring-2 focus-visible:ring-ring sm:inline-flex"
                 aria-label="Previous portfolio image"
               >
                 <ChevronLeft size={21} />
@@ -122,7 +122,7 @@ export function Lightbox({
               <button
                 type="button"
                 onClick={() => onNavigate(1)}
-                className="absolute right-3 top-1/2 z-30 hidden h-11 w-11 -translate-y-1/2 items-center justify-center border border-foreground/35 bg-background/85 text-foreground backdrop-blur-sm transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:ring-2 focus-visible:ring-primary sm:inline-flex"
+                className="absolute right-3 top-1/2 z-30 hidden h-11 w-11 -translate-y-1/2 items-center justify-center border border-foreground/35 bg-background/85 text-foreground backdrop-blur-sm transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:ring-2 focus-visible:ring-ring sm:inline-flex"
                 aria-label="Next portfolio image"
               >
                 <ChevronRight size={21} />
@@ -139,7 +139,7 @@ export function Lightbox({
                 <button
                   type="button"
                   onClick={() => onNavigate(-1)}
-                  className="inline-flex h-10 w-10 items-center justify-center border border-border text-foreground transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:ring-2 focus-visible:ring-primary"
+                  className="inline-flex h-10 w-10 items-center justify-center border border-border text-foreground transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:ring-2 focus-visible:ring-ring"
                   aria-label="Previous portfolio image"
                 >
                   <ChevronLeft size={19} />
@@ -154,7 +154,7 @@ export function Lightbox({
                 <button
                   type="button"
                   onClick={() => onNavigate(1)}
-                  className="inline-flex h-10 w-10 items-center justify-center border border-border text-foreground transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:ring-2 focus-visible:ring-primary"
+                  className="inline-flex h-10 w-10 items-center justify-center border border-border text-foreground transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:ring-2 focus-visible:ring-ring"
                   aria-label="Next portfolio image"
                 >
                   <ChevronRight size={19} />

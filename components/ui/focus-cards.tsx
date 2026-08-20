@@ -1,6 +1,6 @@
 /**
- * Violet Aperture design reminder: a selected photograph steps forward while surrounding
- * frames soften, echoing the focused, high-contrast portfolio interactions of the reference.
+ * Black + Beige design reminder: a selected photograph steps forward while surrounding
+ * frames soften, keeping the interaction cinematic and photography-led.
  */
 import { Children, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";

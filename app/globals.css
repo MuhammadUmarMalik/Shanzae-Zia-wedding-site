@@ -1,6 +1,6 @@
 /*
- * Violet Aperture design system: Behance-inspired black, white, and #5A1BB7 violet,
- * Bodoni Moda display type, Manrope interface text, and high-contrast image interactions.
+ * Black + Beige editorial design system: deep black creates cinematic depth, warm beige signals action,
+ * and cream provides calm reading surfaces around the photography.
  */
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -38,25 +38,25 @@
 :root,
 .dark {
   --radius: 0.125rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.15 0.005 285);
-  --card: oklch(0.965 0.018 302);
-  --card-foreground: oklch(0.15 0.005 285);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0.005 285);
-  --primary: oklch(0.46 0.205 301);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.15 0.005 285);
-  --secondary-foreground: oklch(1 0 0);
-  --muted: oklch(0.976 0.009 302);
-  --muted-foreground: oklch(0.48 0.016 285);
-  --accent: oklch(0.84 0.11 301);
-  --accent-foreground: oklch(0.15 0.005 285);
+  --background: oklch(0.95 0.013 80);
+  --foreground: oklch(0.18 0.006 82);
+  --card: oklch(0.89 0.027 78);
+  --card-foreground: oklch(0.18 0.006 82);
+  --popover: oklch(0.95 0.013 80);
+  --popover-foreground: oklch(0.18 0.006 82);
+  --primary: oklch(0.80 0.04 78);
+  --primary-foreground: oklch(0.14 0.003 80);
+  --secondary: oklch(0.14 0.003 80);
+  --secondary-foreground: oklch(0.95 0.013 80);
+  --muted: oklch(0.89 0.027 78);
+  --muted-foreground: oklch(0.39 0.014 78);
+  --accent: oklch(0.80 0.04 78);
+  --accent-foreground: oklch(0.14 0.003 80);
   --destructive: oklch(0.56 0.17 25);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.87 0.012 302);
-  --input: oklch(0.87 0.012 302);
-  --ring: oklch(0.46 0.205 301 / 0.6);
+  --border: oklch(0.18 0.006 82 / 0.14);
+  --input: oklch(0.18 0.006 82 / 0.14);
+  --ring: oklch(0.80 0.04 78 / 0.75);
 }
 
 @layer base {
@@ -85,8 +85,8 @@
   }
 
   ::selection {
-    background: oklch(0.46 0.205 301 / 0.9);
-    color: oklch(1 0 0);
+    background: oklch(0.80 0.04 78 / 0.95);
+    color: oklch(0.14 0.003 80);
   }
 
   button:not(:disabled),
@@ -111,6 +111,26 @@
     @apply max-w-7xl mx-auto px-8 md:px-16;
   }
 
+  .editorial-dark {
+    --background: oklch(0.14 0.003 80);
+    --foreground: oklch(0.95 0.013 80);
+    --card: oklch(0.18 0.006 82);
+    --card-foreground: oklch(0.95 0.013 80);
+    --popover: oklch(0.18 0.006 82);
+    --popover-foreground: oklch(0.95 0.013 80);
+    --primary: oklch(0.80 0.04 78);
+    --primary-foreground: oklch(0.14 0.003 80);
+    --secondary: oklch(0.14 0.003 80);
+    --secondary-foreground: oklch(0.95 0.013 80);
+    --muted: oklch(0.18 0.006 82);
+    --muted-foreground: oklch(0.78 0.02 78);
+    --accent: oklch(0.80 0.04 78);
+    --accent-foreground: oklch(0.14 0.003 80);
+    --border: oklch(0.89 0.027 78 / 0.18);
+    --input: oklch(0.89 0.027 78 / 0.18);
+    --ring: oklch(0.80 0.04 78 / 0.85);
+  }
+
   .section-label {
     @apply font-ui text-[0.625rem] font-semibold leading-[1.45] tracking-[0.1em] text-muted-foreground uppercase sm:text-[0.6875rem] sm:tracking-[0.14em];
   }
@@ -124,7 +144,7 @@
   }
 
   .primary-button {
-    @apply rounded-sm bg-primary px-6 py-3 font-ui text-[0.75rem] font-semibold tracking-[0.07em] text-primary-foreground uppercase shadow-[0_14px_28px_-15px_oklch(0.25_0.16_301/0.8)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-[0_20px_35px_-15px_oklch(0.25_0.16_301/0.85)] active:scale-[0.97];
+    @apply rounded-sm bg-primary px-6 py-3 font-ui text-[0.75rem] font-semibold tracking-[0.07em] text-primary-foreground uppercase shadow-[0_14px_28px_-15px_oklch(0.14_0.003_80/0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent hover:shadow-[0_20px_35px_-15px_oklch(0.14_0.003_80/0.38)] active:scale-[0.97];
   }
 
   .outline-button {
@@ -146,14 +166,14 @@
   }
 
   .hero-grid {
-    background-image: linear-gradient(oklch(0.985 0.012 82 / 0.09) 1px, transparent 1px), linear-gradient(90deg, oklch(0.985 0.012 82 / 0.09) 1px, transparent 1px);
+    background-image: linear-gradient(oklch(0.80 0.04 78 / 0.12) 1px, transparent 1px), linear-gradient(90deg, oklch(0.80 0.04 78 / 0.12) 1px, transparent 1px);
     background-size: 52px 52px;
   }
 
   .image-frame {
     isolation: isolate;
     border-radius: clamp(0.6rem, 1vw, 0.85rem);
-    background: oklch(0.17 0.02 301 / 0.1);
+    background: oklch(0.14 0.003 80 / 0.12);
   }
 
   .image-loading-wash {
@@ -162,12 +182,11 @@
     z-index: 20;
     overflow: hidden;
     pointer-events: none;
-    background: linear-gradient(112deg, oklch(0.18 0.03 301 / 0.14) 0%, oklch(0.54 0.22 301 / 0.2) 42%, oklch(0.18 0.03 301 / 0.12) 68%);
+    background: linear-gradient(112deg, oklch(0.14 0.003 80 / 0.14) 0%, oklch(0.80 0.04 78 / 0.28) 42%, oklch(0.14 0.003 80 / 0.12) 68%);
     background-size: 230% 100%;
     border-radius: inherit;
     animation: editorial-image-sheen 1.25s ease-in-out infinite;
     transition: opacity 300ms cubic-bezier(0.23, 1, 0.32, 1), visibility 300ms step-end;
-    will-change: opacity;
   }
 
   .image-loading-wash--hidden {
@@ -188,7 +207,7 @@
     inset: 0;
     z-index: 5;
     pointer-events: none;
-    background: linear-gradient(135deg, oklch(0.56 0.22 301 / 0.16), transparent 28%, transparent 72%, oklch(0.08 0.01 301 / 0.18));
+    background: linear-gradient(135deg, oklch(0.14 0.003 80 / 0.1), transparent 28%, transparent 72%, oklch(0.14 0.003 80 / 0.24));
     content: "";
     opacity: 0;
     transition: opacity 280ms cubic-bezier(0.23, 1, 0.32, 1);
@@ -208,8 +227,8 @@
   }
 
   @keyframes editorial-image-sheen {
-    from { opacity: 0.35; }
-    to { opacity: 0.85; }
+    from { background-position: 115% 0; }
+    to { background-position: -115% 0; }
   }
 
   main > section:not([data-static-motion]) {
@@ -252,9 +271,5 @@
 @media (pointer: coarse) {
   .grain-overlay {
     display: none;
-  }
-
-  .image-loading-wash {
-    animation: none;
   }
 }

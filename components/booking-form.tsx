@@ -56,7 +56,7 @@ function BookingField({
     <div className="space-y-2">
       <Label
         htmlFor={id}
-        className="font-ui text-[0.6875rem] font-normal tracking-[0.1em] text-foreground/80 uppercase"
+        className="font-ui text-[0.6875rem] font-normal tracking-[0.1em] text-secondary-foreground/85 uppercase"
       >
         {label}
       </Label>
@@ -112,7 +112,7 @@ export function BookingForm() {
             {...form.register("name")}
             placeholder="Your name"
             aria-invalid={Boolean(form.formState.errors.name)}
-            className="h-12 rounded-sm border-border bg-transparent font-ui text-sm placeholder:text-muted-foreground/70"
+            className="h-12 rounded-sm border-secondary-foreground/25 bg-transparent font-ui text-sm text-secondary-foreground placeholder:text-secondary-foreground/40"
           />
         </BookingField>
         <BookingField
@@ -126,7 +126,7 @@ export function BookingForm() {
             {...form.register("email")}
             placeholder="name@example.com"
             aria-invalid={Boolean(form.formState.errors.email)}
-            className="h-12 rounded-sm border-border bg-transparent font-ui text-sm placeholder:text-muted-foreground/70"
+            className="h-12 rounded-sm border-secondary-foreground/25 bg-transparent font-ui text-sm text-secondary-foreground placeholder:text-secondary-foreground/40"
           />
         </BookingField>
         <BookingField
@@ -139,7 +139,7 @@ export function BookingForm() {
             {...form.register("phone")}
             placeholder="Your phone number"
             aria-invalid={Boolean(form.formState.errors.phone)}
-            className="h-12 rounded-sm border-border bg-transparent font-ui text-sm placeholder:text-muted-foreground/70"
+            className="h-12 rounded-sm border-secondary-foreground/25 bg-transparent font-ui text-sm text-secondary-foreground placeholder:text-secondary-foreground/40"
           />
         </BookingField>
         <BookingField
@@ -152,7 +152,7 @@ export function BookingForm() {
             {...form.register("location")}
             placeholder="City or venue"
             aria-invalid={Boolean(form.formState.errors.location)}
-            className="h-12 rounded-sm border-border bg-transparent font-ui text-sm placeholder:text-muted-foreground/70"
+            className="h-12 rounded-sm border-secondary-foreground/25 bg-transparent font-ui text-sm text-secondary-foreground placeholder:text-secondary-foreground/40"
           />
         </BookingField>
         <BookingField
@@ -166,11 +166,11 @@ export function BookingForm() {
                 id="date"
                 type="button"
                 variant="outline"
-                className="flex h-12 w-full justify-start rounded-sm border-border bg-transparent px-3 font-ui text-sm font-normal text-foreground hover:bg-foreground/5"
+                className="flex h-12 w-full justify-start rounded-sm border-secondary-foreground/25 bg-transparent px-3 font-ui text-sm font-normal text-secondary-foreground hover:bg-secondary-foreground/10"
               >
                 <CalendarDays
                   size={16}
-                  className="mr-2 text-muted-foreground"
+                  className="mr-2 text-secondary-foreground/60"
                 />
                 {form.watch("date") ? (
                   form.watch("date")?.toLocaleDateString("en-GB", {
@@ -179,7 +179,7 @@ export function BookingForm() {
                     year: "numeric",
                   })
                 ) : (
-                  <span className="text-muted-foreground">
+                  <span className="text-secondary-foreground/50">
                     Choose a date
                   </span>
                 )}
@@ -221,11 +221,11 @@ export function BookingForm() {
           >
             <SelectTrigger
               id="time"
-              className="h-12 rounded-sm border-border bg-transparent font-ui text-sm"
+              className="h-12 rounded-sm border-secondary-foreground/25 bg-transparent font-ui text-sm text-secondary-foreground"
             >
               <Clock3
                 size={16}
-                className="mr-2 text-muted-foreground"
+                className="mr-2 text-secondary-foreground/60"
               />
               <SelectValue placeholder="Choose a time" />
             </SelectTrigger>
@@ -247,7 +247,7 @@ export function BookingForm() {
               {...form.register("message")}
               placeholder="Tell me about your event or photography requirements."
               aria-invalid={Boolean(form.formState.errors.message)}
-              className="min-h-36 resize-y rounded-sm border-border bg-transparent font-ui text-sm leading-7 placeholder:text-muted-foreground/70"
+              className="min-h-36 resize-y rounded-sm border-secondary-foreground/25 bg-transparent font-ui text-sm leading-7 text-secondary-foreground placeholder:text-secondary-foreground/40"
             />
           </BookingField>
         </div>
@@ -268,7 +268,7 @@ export function BookingForm() {
               </>
             )}
           </Button>
-          <p className="mt-4 text-center text-xs font-light leading-5 text-muted-foreground">
+          <p className="mt-4 text-center text-xs font-light leading-5 text-secondary-foreground/55">
             This static preview validates your enquiry locally. Connect
             it to an inbox before accepting live submissions.
           </p>
