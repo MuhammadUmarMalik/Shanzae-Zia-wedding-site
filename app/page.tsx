@@ -7,7 +7,7 @@
 import { useEffect, useRef, useState, type TouchEvent } from "react";
 import dynamic from "next/dynamic";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -54,6 +54,13 @@ const socialLinks = {
   facebook: "https://web.facebook.com/profile.php?id=100093684345361&mibextid=wwXIfr&rdid=jvVymqPxal1qmv77&share_url=https%3A%2F%2Fweb.facebook.com%2Fshare%2F1BhxBYzeFS%2F%3Fmibextid%3DwwXIfr%26utm_source%3Dig%26utm_medium%3Dsocial%26utm_content%3Dlink_in_bio%26_rdc%3D1%26_rdr%23",
   tiktok: "https://www.tiktok.com/@shanzu.photoworks?_r=1&_t=ZS-92NKUYwFHYW&fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAaebZ80SnLFRBT8u-HePBECmJxPPPVVTDqjpbdc1sNIkVzXAXEHsbVeDoeBhjA_aem_ltcUyFn-XgVUlN1bX0HpTA",
 } as const;
+
+const filmChannels = [
+  { key: "public", label: "Public Reels", meta: "TikTok collection", copy: "A running archive of reels and highlights from recent weddings.", href: socialLinks.tiktok, external: true, cta: "Watch latest reels" },
+  { key: "private", label: "Private Films", meta: "On request", copy: "A private preview of complete wedding films, shaped for your day.", href: "#book", external: false, cta: "Request a film preview" },
+] as const;
+
+type FilmChannelKey = (typeof filmChannels)[number]["key"];
 
 const Calendar = dynamic(
   () => import("@/components/ui/calendar").then((module) => module.Calendar),
@@ -241,6 +248,11 @@ export default function Home() {
   const lightboxTouchStart = useRef<{ x: number; y: number } | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeFaqGroup, setActiveFaqGroup] = useState<(typeof faqGroups)[number]>("General");
+  const [activeFilmChannel, setActiveFilmChannel] = useState<FilmChannelKey>("public");
+  const activeChannel = filmChannels.find((channel) => channel.key === activeFilmChannel) ?? filmChannels[0];
+  const filmSectionRef = useRef<HTMLElement | null>(null);
+  const { scrollYProgress } = useScroll({ target: filmSectionRef, offset: ["start end", "end start"] });
+  const filmParallax = useTransform(scrollYProgress, [0, 1], [18, -18]);
   const reduceMotion = useReducedMotion();
   const form = useForm<BookingValues>({
     resolver: zodResolver(bookingSchema),
@@ -561,25 +573,91 @@ export default function Home() {
           </div>
         </section>
 
-        <section data-static-motion className="editorial-dark relative overflow-hidden border-t border-border py-16 md:py-24" aria-labelledby="motion-heading">
-          <div aria-hidden="true" className="pointer-events-none absolute -right-24 top-12 h-72 w-72 rounded-full border border-primary/20" />
-          <div className="editorial-shell relative grid grid-cols-1 gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-center lg:gap-20">
-            <div>
-              <p className="section-label text-primary">Cinematic films</p>
-              <h2 id="motion-heading" className="mt-5 max-w-lg font-display text-4xl italic leading-[0.98] text-foreground md:text-6xl">Stories you can feel in motion.</h2>
-              <p className="mt-6 max-w-md text-base font-light leading-8 text-foreground/75">Cinematic highlights, wedding films, and visual reels carry the energy of a day beyond a single frame. Watch the latest public reels or ask for a private film preview.</p>
-              <div className="mt-8 grid max-w-md grid-cols-2 border-y border-border/80">
-                <div className="py-4 pr-5"><p className="font-ui text-[0.625rem] font-medium tracking-[0.12em] text-primary uppercase">Public reels</p><p className="mt-2 font-display text-xl text-foreground">TikTok collection</p></div>
-                <div className="border-l border-border/80 py-4 pl-5"><p className="font-ui text-[0.625rem] font-medium tracking-[0.12em] text-primary uppercase">Private films</p><p className="mt-2 font-display text-xl text-foreground">On request</p></div>
+        <section data-static-motion className="relative overflow-hidden border-t border-border bg-background py-16 md:py-24" aria-labelledby="motion-heading">
+          <div className="editorial-shell">
+            <div className="flex items-end justify-between gap-6">
+              <div className="flex items-center gap-4">
+                <span aria-hidden="true" className="h-px w-10 bg-primary" />
+                <p className="section-label">Cinematic films</p>
               </div>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row"><a href={socialLinks.tiktok} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-3 bg-primary px-5 py-3.5 font-ui text-[0.6875rem] font-medium tracking-[0.12em] text-primary-foreground uppercase transition-transform duration-200 hover:-translate-y-0.5"><FaTiktok size={16} /> Watch latest reels <ArrowUpRight size={15} /></a><a href="#book" className="inline-flex items-center justify-center gap-3 border border-foreground/35 px-5 py-3.5 font-ui text-[0.6875rem] font-medium tracking-[0.12em] text-foreground uppercase transition-colors hover:border-primary hover:text-primary">Request a film preview <ArrowUpRight size={15} /></a></div>
+              <p className="hidden shrink-0 font-ui text-[0.625rem] font-medium tracking-[0.2em] text-muted-foreground uppercase sm:block">01 — 08 Films</p>
             </div>
-            <figure className="image-frame group relative aspect-[16/10] overflow-hidden border border-primary/30 bg-card shadow-[0_30px_70px_-38px_oklch(0.8_0.04_78/0.25)]">
-              <EditorialImage src="/images/shanzae/wedding-story-04.jpg" alt="Cinematic wedding celebration by Shanzae Zia" sizes="(min-width: 1024px) 58vw, 100vw" className="h-full w-full object-cover object-center" />
-              <div className="absolute inset-0 z-10 bg-gradient-to-t from-background/95 via-background/15 to-transparent" />
-              <div className="absolute inset-x-5 top-5 z-20 flex items-center justify-between"><span className="border border-foreground/25 bg-background/55 px-3 py-2 font-ui text-[0.5625rem] font-medium tracking-[0.14em] text-foreground uppercase backdrop-blur-sm">Shanzae Zia films</span><span className="font-ui text-[0.625rem] font-medium tracking-[0.12em] text-foreground/75 uppercase">2026 reel</span></div>
-              <div className="absolute inset-x-5 bottom-5 z-20 flex items-end justify-between gap-5"><div><p className="font-display text-3xl leading-none text-foreground md:text-4xl">Wedding highlights.</p><p className="mt-2 font-ui text-[0.625rem] font-medium tracking-[0.1em] text-primary uppercase">Cinematic edit · real moments</p></div><a href={socialLinks.tiktok} target="_blank" rel="noreferrer" aria-label="Watch Shanzae Zia's latest TikTok reels" className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-primary bg-primary text-primary-foreground transition-transform duration-300 hover:scale-105 focus-visible:ring-2 focus-visible:ring-foreground"><CirclePlay size={22} /></a></div>
-            </figure>
+
+            <div className="mt-10 grid grid-cols-1 gap-12 lg:mt-14 lg:grid-cols-12 lg:items-start lg:gap-16">
+              <div className="lg:col-span-4">
+                <motion.div initial={reduceMotion ? false : { opacity: 0, y: 24 }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.7, ease: EASE }}>
+                  <h2 id="motion-heading" className="max-w-md font-display text-[clamp(2.25rem,3.5vw,3.75rem)] font-medium leading-[0.98] text-foreground">Films made to be <em className="font-display italic">remembered.</em></h2>
+                  <p className="mt-6 max-w-sm text-base font-light leading-8 text-foreground/75">Cinematic wedding films shaped around real moments, emotion, movement, and the atmosphere of the day.</p>
+                </motion.div>
+
+                <motion.div initial={reduceMotion ? false : { opacity: 0, y: 24 }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.7, delay: 0.12, ease: EASE }} className="mt-10">
+                  <p className="section-label">Browse the archive</p>
+                  <ul className="mt-2 border-t border-border">
+                    {filmChannels.map((channel, index) => {
+                      const isActive = activeFilmChannel === channel.key;
+                      return (
+                        <li key={channel.key}>
+                          <button type="button" onClick={() => setActiveFilmChannel(channel.key)} aria-pressed={isActive} className="group relative block w-full text-left focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background">
+                            {isActive ? <motion.span layoutId="film-channel-marker" aria-hidden="true" className="absolute left-0 top-1/2 h-7 w-[3px] -translate-y-1/2 bg-primary" transition={{ duration: 0.45, ease: EASE }} /> : null}
+                            <span className="flex items-baseline gap-4 border-b border-border py-4 pl-5">
+                              <span className="font-ui text-[0.625rem] font-medium tracking-[0.2em] text-muted-foreground">0{index + 1}</span>
+                              <span className={cn("font-display text-2xl leading-none transition-colors duration-300 md:text-[1.75rem]", isActive ? "text-foreground" : "text-foreground/40 group-hover:text-foreground/75")}>{channel.label}</span>
+                              <span className={cn("ml-auto font-ui text-[0.625rem] font-medium tracking-[0.14em] uppercase transition-colors duration-300", isActive ? "text-primary" : "text-muted-foreground")}>{channel.meta}</span>
+                            </span>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <p key={activeChannel.key} className="mt-5 max-w-sm text-sm font-light leading-7 text-foreground/70">{activeChannel.copy}</p>
+                </motion.div>
+
+                <motion.div initial={reduceMotion ? false : { opacity: 0, y: 24 }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.7, delay: 0.22, ease: EASE }} className="mt-8">
+                  <a key={activeChannel.key} href={activeChannel.href} target={activeChannel.external ? "_blank" : undefined} rel={activeChannel.external ? "noreferrer" : undefined} className="group inline-flex items-center gap-3 bg-primary px-5 py-3.5 font-ui text-[0.6875rem] font-medium tracking-[0.12em] text-primary-foreground uppercase transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background">
+                    {activeChannel.key === "public" ? <FaTiktok size={16} /> : <CirclePlay size={16} />}
+                    <span>{activeChannel.cta}</span>
+                    <ArrowUpRight size={15} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </a>
+                </motion.div>
+              </div>
+
+              <div className="lg:col-span-8">
+                <motion.div initial={reduceMotion ? false : { opacity: 0, y: 30 }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.85, delay: 0.1, ease: EASE }}>
+                  <figure ref={filmSectionRef} className="group relative overflow-hidden rounded-[1.25rem] bg-card shadow-[0_48px_100px_-56px_oklch(0.14_0.003_80/0.5)]">
+                    <div className="relative aspect-[16/9] overflow-hidden">
+                      <motion.div aria-hidden="true" style={reduceMotion ? undefined : { y: filmParallax }} className="absolute inset-0 scale-[1.12]">
+                        <EditorialImage src="/images/shanzae/wedding-story-04.jpg" alt="Cinematic wedding celebration by Shanzae Zia" sizes="(min-width: 1280px) 68vw, (min-width: 768px) 60vw, 100vw" className="h-full w-full object-cover object-center transition-transform duration-[600ms] ease-out group-hover:scale-[1.03]" />
+                      </motion.div>
+                      <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-foreground/85 via-foreground/10 to-transparent" />
+                      <div className="pointer-events-none absolute inset-0 z-10 bg-foreground/0 transition-colors duration-700 group-hover:bg-foreground/20" />
+                      <div className="absolute inset-x-0 top-0 z-20 flex items-start justify-between p-6 md:p-8">
+                        <p className="font-ui text-[0.625rem] font-medium tracking-[0.16em] text-background/90 uppercase drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]">Shanzae Zia Films</p>
+                        <p className="font-ui text-[0.625rem] font-medium tracking-[0.16em] text-background/80 uppercase">2026 Reel</p>
+                      </div>
+                      <div className="absolute inset-x-0 bottom-0 z-20 flex items-end justify-between gap-5 p-6 md:p-8">
+                        <div>
+                          <p className="font-ui text-[0.625rem] font-medium tracking-[0.16em] text-primary uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">Cinematic edit · Real moments</p>
+                          <p className="mt-3 font-display text-3xl leading-none text-background drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)] md:text-5xl">Wedding Highlights.</p>
+                        </div>
+                        <a href={socialLinks.tiktok} target="_blank" rel="noreferrer" aria-label="Watch Shanzae Zia's latest TikTok reels" className="group/play relative z-30 flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-background/60 bg-background/10 text-background backdrop-blur-sm transition-all duration-500 group-hover:scale-105 hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:ring-2 focus-visible:ring-foreground md:h-[4.5rem] md:w-[4.5rem]">
+                          <CirclePlay size={26} className="transition-transform duration-500 group-hover/play:scale-110" />
+                          <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-full border border-background/40 transition-all duration-500 group-hover/play:scale-110 group-hover/play:border-transparent group-hover/play:opacity-0" />
+                        </a>
+                      </div>
+                    </div>
+                  </figure>
+                </motion.div>
+
+                <motion.div initial={reduceMotion ? false : { opacity: 0, y: 20 }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.7, delay: 0.2, ease: EASE }} className="mt-6 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-border pt-6 sm:grid-cols-4">
+                  {[["Featured film", "2026 Reel"], ["Category", "Wedding"], ["Location", "Islamabad"], ["Runtime", "03:42"]].map(([label, value]) => (
+                    <div key={label}>
+                      <p className="font-ui text-[0.5625rem] font-medium tracking-[0.16em] text-muted-foreground uppercase">{label}</p>
+                      <p className="mt-2 font-display text-lg leading-none text-foreground">{value}</p>
+                    </div>
+                  ))}
+                </motion.div>
+              </div>
+            </div>
           </div>
         </section>
 
