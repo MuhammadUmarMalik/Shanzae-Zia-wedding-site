@@ -415,10 +415,10 @@ export default function Home() {
                 Wedding Photographer • Videographer • Visual Storyteller
               </motion.p>
             </div>
-            <h1 id="hero-heading" aria-label="Capturing Your Moments. Telling Your Story." className="mt-8 max-w-[16ch] font-display text-[clamp(2.65rem,8vw,8.75rem)] font-medium leading-[0.98] tracking-[-0.012em] text-foreground sm:mt-9 sm:max-w-[18ch] sm:leading-[0.92] lg:max-w-[20ch] lg:leading-[0.84]">
-              <span className="block whitespace-nowrap">Capturing Your</span>
-              <span className="block whitespace-nowrap"><span className="text-primary">Moments.</span> Telling</span>
-              <span className="block whitespace-nowrap">Your Story.</span>
+            <h1 id="hero-heading" aria-label="Capturing Your Moments. Telling Your Story." className="mt-8 max-w-[13ch] font-display text-[clamp(2.5rem,7.1vw,6.75rem)] font-medium leading-[1.1] tracking-[-0.012em] text-foreground sm:mt-10">
+              <span className="block">Capturing Your</span>
+              <span className="block"><span className="text-primary">Moments.</span> Telling</span>
+              <span className="block">Your Story.</span>
             </h1>
             <motion.div initial={reduceMotion ? false : { opacity: 0, y: 18 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.76, ease: EASE }} className="mt-8 flex flex-col gap-4 sm:mt-10 sm:flex-row sm:items-end sm:justify-between">
               <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:gap-3">
