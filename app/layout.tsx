@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     title: "Shanzae Zia | Wedding & Cinematic Photographer",
     description: "Professional wedding photography, cinematic videography and visual storytelling by Shanzae Zia.",
   },
-  icons: { icon: "/manus-storage/shanzae-supplied-logo_84810e5d.png" },
+  icons: { icon: "/images/shanzae/shanzae-supplied-logo.png" },
 };
 
 export const viewport: Viewport = { themeColor: "#0B0B0A" };
