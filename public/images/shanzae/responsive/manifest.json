@@ -1,0 +1,171 @@
+{
+  "still-frame-hero": {
+    "source": "still-frame-hero.jpg",
+    "width": 2560,
+    "height": 1440,
+    "avif": [
+      "still-frame-hero-900w.avif",
+      "still-frame-hero-1600w.avif"
+    ],
+    "webp": [
+      "still-frame-hero-900w.webp",
+      "still-frame-hero-1600w.webp"
+    ]
+  },
+  "still-frame-story-01": {
+    "source": "still-frame-story-01.jpg",
+    "width": 1536,
+    "height": 2304,
+    "avif": [
+      "still-frame-story-01-900w.avif",
+      "still-frame-story-01-1536w.avif"
+    ],
+    "webp": [
+      "still-frame-story-01-900w.webp",
+      "still-frame-story-01-1536w.webp"
+    ]
+  },
+  "still-frame-story-02": {
+    "source": "still-frame-story-02.jpg",
+    "width": 2304,
+    "height": 1536,
+    "avif": [
+      "still-frame-story-02-900w.avif",
+      "still-frame-story-02-1600w.avif"
+    ],
+    "webp": [
+      "still-frame-story-02-900w.webp",
+      "still-frame-story-02-1600w.webp"
+    ]
+  },
+  "still-frame-studio-portrait": {
+    "source": "still-frame-studio-portrait.jpg",
+    "width": 1920,
+    "height": 1920,
+    "avif": [
+      "still-frame-studio-portrait-900w.avif",
+      "still-frame-studio-portrait-1600w.avif"
+    ],
+    "webp": [
+      "still-frame-studio-portrait-900w.webp",
+      "still-frame-studio-portrait-1600w.webp"
+    ]
+  },
+  "shanzae-faisal-mosque-wedding": {
+    "source": "shanzae-faisal-mosque-wedding.jpeg",
+    "width": 1089,
+    "height": 1280,
+    "avif": [
+      "shanzae-faisal-mosque-wedding-900w.avif",
+      "shanzae-faisal-mosque-wedding-1089w.avif"
+    ],
+    "webp": [
+      "shanzae-faisal-mosque-wedding-900w.webp",
+      "shanzae-faisal-mosque-wedding-1089w.webp"
+    ]
+  },
+  "shanzae-profile": {
+    "source": "shanzae-profile.jpg",
+    "width": 1080,
+    "height": 1080,
+    "avif": [
+      "shanzae-profile-900w.avif",
+      "shanzae-profile-1080w.avif"
+    ],
+    "webp": [
+      "shanzae-profile-900w.webp",
+      "shanzae-profile-1080w.webp"
+    ]
+  },
+  "shanzae-portrait-story": {
+    "source": "shanzae-portrait-story.jpeg",
+    "width": 1080,
+    "height": 1349,
+    "avif": [
+      "shanzae-portrait-story-900w.avif",
+      "shanzae-portrait-story-1080w.avif"
+    ],
+    "webp": [
+      "shanzae-portrait-story-900w.webp",
+      "shanzae-portrait-story-1080w.webp"
+    ]
+  },
+  "wedding-story-01": {
+    "source": "wedding-story-01.jpg",
+    "width": 1080,
+    "height": 1350,
+    "avif": [
+      "wedding-story-01-900w.avif",
+      "wedding-story-01-1080w.avif"
+    ],
+    "webp": [
+      "wedding-story-01-900w.webp",
+      "wedding-story-01-1080w.webp"
+    ]
+  },
+  "wedding-story-02": {
+    "source": "wedding-story-02.jpg",
+    "width": 1366,
+    "height": 2048,
+    "avif": [
+      "wedding-story-02-900w.avif",
+      "wedding-story-02-1366w.avif"
+    ],
+    "webp": [
+      "wedding-story-02-900w.webp",
+      "wedding-story-02-1366w.webp"
+    ]
+  },
+  "wedding-story-03": {
+    "source": "wedding-story-03.jpg",
+    "width": 4000,
+    "height": 6000,
+    "avif": [
+      "wedding-story-03-900w.avif",
+      "wedding-story-03-1600w.avif"
+    ],
+    "webp": [
+      "wedding-story-03-900w.webp",
+      "wedding-story-03-1600w.webp"
+    ]
+  },
+  "wedding-story-04": {
+    "source": "wedding-story-04.jpg",
+    "width": 4000,
+    "height": 6000,
+    "avif": [
+      "wedding-story-04-900w.avif",
+      "wedding-story-04-1600w.avif"
+    ],
+    "webp": [
+      "wedding-story-04-900w.webp",
+      "wedding-story-04-1600w.webp"
+    ]
+  },
+  "wedding-story-05": {
+    "source": "wedding-story-05.jpg",
+    "width": 1080,
+    "height": 1349,
+    "avif": [
+      "wedding-story-05-900w.avif",
+      "wedding-story-05-1080w.avif"
+    ],
+    "webp": [
+      "wedding-story-05-900w.webp",
+      "wedding-story-05-1080w.webp"
+    ]
+  },
+  "wedding-story-06": {
+    "source": "wedding-story-06.jpg",
+    "width": 1080,
+    "height": 1350,
+    "avif": [
+      "wedding-story-06-900w.avif",
+      "wedding-story-06-1080w.avif"
+    ],
+    "webp": [
+      "wedding-story-06-900w.webp",
+      "wedding-story-06-1080w.webp"
+    ]
+  }
+}

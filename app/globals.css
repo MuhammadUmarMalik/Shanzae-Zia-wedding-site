@@ -1,0 +1,255 @@
+/*
+ * Violet Aperture design system: Behance-inspired black, white, and #5A1BB7 violet,
+ * Bodoni Moda display type, Manrope interface text, and high-contrast image interactions.
+ */
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: 0.125rem;
+  --radius-md: 0.125rem;
+  --radius-lg: 0.125rem;
+  --radius-xl: 0.125rem;
+  --font-display: var(--font-bodoni), Didot, "Times New Roman", serif;
+  --font-ui: var(--font-manrope), Arial, sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root,
+.dark {
+  --radius: 0.125rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.15 0.005 285);
+  --card: oklch(0.965 0.018 302);
+  --card-foreground: oklch(0.15 0.005 285);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.15 0.005 285);
+  --primary: oklch(0.46 0.205 301);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.15 0.005 285);
+  --secondary-foreground: oklch(1 0 0);
+  --muted: oklch(0.976 0.009 302);
+  --muted-foreground: oklch(0.48 0.016 285);
+  --accent: oklch(0.84 0.11 301);
+  --accent-foreground: oklch(0.15 0.005 285);
+  --destructive: oklch(0.56 0.17 25);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.87 0.012 302);
+  --input: oklch(0.87 0.012 302);
+  --ring: oklch(0.46 0.205 301 / 0.6);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background font-ui text-foreground antialiased;
+    line-height: 1.5;
+    font-feature-settings: "kern", "liga", "tnum";
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: oklch(0.46 0.205 301 / 0.9);
+    color: oklch(1 0 0);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-foreground/50 ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer components {
+  .editorial-shell {
+    @apply max-w-7xl mx-auto px-8 md:px-16;
+  }
+
+  .section-label {
+    @apply font-ui text-[0.625rem] font-semibold leading-[1.45] tracking-[0.1em] text-muted-foreground uppercase sm:text-[0.6875rem] sm:tracking-[0.14em];
+  }
+
+  .font-display {
+    letter-spacing: -0.02em;
+  }
+
+  .editorial-link {
+    @apply underline decoration-primary/50 underline-offset-4 transition-colors duration-200 hover:text-primary hover:decoration-primary;
+  }
+
+  .primary-button {
+    @apply rounded-sm bg-primary px-6 py-3 font-ui text-[0.75rem] font-semibold tracking-[0.07em] text-primary-foreground uppercase shadow-[0_14px_28px_-15px_oklch(0.25_0.16_301/0.8)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-[0_20px_35px_-15px_oklch(0.25_0.16_301/0.85)] active:scale-[0.97];
+  }
+
+  .outline-button {
+    @apply rounded-sm border border-foreground/30 bg-transparent px-6 py-3 font-ui text-[0.75rem] font-semibold tracking-[0.07em] text-foreground uppercase transition-all duration-300 hover:border-primary hover:bg-primary hover:text-primary-foreground active:scale-[0.97];
+  }
+
+  .contact-link {
+    @apply flex items-center gap-3 border-b border-border py-3 font-ui text-sm text-foreground transition-colors duration-200 hover:text-primary;
+  }
+
+  .grain-overlay {
+    opacity: 0.012;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  .film-rule {
+    @apply h-px w-12 bg-foreground/30;
+  }
+
+  .hero-grid {
+    background-image: linear-gradient(oklch(0.985 0.012 82 / 0.09) 1px, transparent 1px), linear-gradient(90deg, oklch(0.985 0.012 82 / 0.09) 1px, transparent 1px);
+    background-size: 52px 52px;
+  }
+
+  .image-frame {
+    isolation: isolate;
+    border-radius: clamp(0.6rem, 1vw, 0.85rem);
+    background: oklch(0.17 0.02 301 / 0.1);
+  }
+
+  .image-loading-wash {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    overflow: hidden;
+    pointer-events: none;
+    background: linear-gradient(112deg, oklch(0.18 0.03 301 / 0.14) 0%, oklch(0.54 0.22 301 / 0.2) 42%, oklch(0.18 0.03 301 / 0.12) 68%);
+    background-size: 230% 100%;
+    border-radius: inherit;
+    animation: editorial-image-sheen 1.25s ease-in-out infinite;
+    transition: opacity 300ms cubic-bezier(0.23, 1, 0.32, 1), visibility 300ms step-end;
+  }
+
+  .image-loading-wash--hidden {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .editorial-image {
+    display: block;
+    border-radius: inherit;
+    transform-origin: center;
+    transition: transform 720ms cubic-bezier(0.23, 1, 0.32, 1), filter 480ms cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform, filter, opacity;
+  }
+
+  .image-frame::after {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    background: linear-gradient(135deg, oklch(0.56 0.22 301 / 0.16), transparent 28%, transparent 72%, oklch(0.08 0.01 301 / 0.18));
+    content: "";
+    opacity: 0;
+    transition: opacity 280ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .image-frame:hover .editorial-image,
+    .image-frame:focus-within .editorial-image {
+      transform: scale(1.045);
+      filter: saturate(1.04) contrast(1.04);
+    }
+
+    .image-frame:hover::after,
+    .image-frame:focus-within::after {
+      opacity: 1;
+    }
+  }
+
+  @keyframes editorial-image-sheen {
+    from { background-position: 115% 0; }
+    to { background-position: -115% 0; }
+  }
+
+  main > section:not([data-static-motion]) {
+    opacity: 0;
+    transform: translate3d(0, 36px, 0);
+    transition: opacity 680ms cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 680ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: opacity, transform;
+  }
+
+  main > section[data-section-visible="true"] {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  main > section:not([data-static-motion]) {
+    opacity: 1;
+    transform: none;
+  }
+
+  .image-loading-wash {
+    animation: none;
+    transition-duration: 0.01ms;
+  }
+}
+
+@media (pointer: coarse) {
+  .grain-overlay {
+    display: none;
+  }
+}
